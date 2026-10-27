@@ -27,11 +27,11 @@ Run these commands from the source-code root directory. Download the original `.
 mkdir -p pretrained
 cd pretrained
 
-# 下载英文 CLIP ViT-B/16
+# CLIP 
 curl -L -C - -O \
 "https://openaipublic.azureedge.net/clip/models/5806e77cd80f8b59890b7e101eabd078d9fb84e6937f9e85e4ecb61988df416f/ViT-B-16.pt"
 
-# 下载中文 Chinese-CLIP ViT-B/16
+# Chinese-CLIP 
 curl -L -C - -O \
 "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/clip_cn_vit-b-16.pt"
 
@@ -91,7 +91,7 @@ python -u train_vprm.py train --language en \
 
 
 ## 2. Train the Full ViRTA Model
-### weibo数据
+### weibo
 ```bash
 Chinese data (Weibo interface):
 python -u train_virta.py \
@@ -104,7 +104,7 @@ python -u train_virta.py \
 ```
 
 
-### GossipCop数据
+### GossipCop
 ```bash
 python -u train_virta.py \
   --dataset gossipcop --data-root data/gossip/splits \
