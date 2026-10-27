@@ -1,5 +1,5 @@
 # ViRTA Training and Evaluation Commands
-## 0. Set Up the Environment
+## 1. Set Up the Environment
 
 The reference training environment is Linux with an NVIDIA GPU. Use the following versions:
 
@@ -63,7 +63,7 @@ python preprocess/gossip_preprocess.py \
   --output-dir data/gossip/splits --write
 ```
 
-## 1. Train the VPRM
+## 2. Train the VPRM
 
 Put the clean images into `clean-image/`. On the first run, generate the image-split manifest first; Chinese and English share this single manifest:
 
@@ -90,7 +90,7 @@ python -u train_vprm.py train --language en \
 ```
 
 
-## 2. Train the Full ViRTA Model
+## 3. Train the Full ViRTA Model
 ### weibo
 ```bash
 Chinese data (Weibo interface):
@@ -115,7 +115,7 @@ python -u train_virta.py \
   --output virta_runs/gossipcop_full/best.pth
 ```
 
-## 3. Evaluate the Model
+## 4. Evaluate the Model
 
 ### View the Final Ten-Fold Results
 
