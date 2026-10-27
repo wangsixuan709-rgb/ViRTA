@@ -91,8 +91,9 @@ python -u train_vprm.py train --language en \
 
 
 ## 2. Train the Full ViRTA Model
-
-Chinese data (Weibo interface):```bash
+### weibo数据
+```bash
+Chinese data (Weibo interface):
 python -u train_virta.py \
   --dataset weibo --data-root data/weibo/splits \
   --vprm-checkpoint vprm_runs/zh/pretrain/best.pt \
@@ -102,8 +103,8 @@ python -u train_virta.py \
   --output virta_runs/weibo_full/best.pth
 ```
 
-English data (GossipCop interface):
 
+### GossipCop数据
 ```bash
 python -u train_virta.py \
   --dataset gossipcop --data-root data/gossip/splits \
