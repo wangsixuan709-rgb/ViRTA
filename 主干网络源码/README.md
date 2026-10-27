@@ -3,7 +3,7 @@
 
 The reference training environment is Linux with an NVIDIA GPU. Use the following versions:
 
-| Version |
+|Version|
 |---|---|
 | Python | 3.12.3 |
 | PyTorch | 2.8.0 |
