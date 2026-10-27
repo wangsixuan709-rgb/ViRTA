@@ -1,0 +1,7 @@
+name: virta
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.3
+  - pip
+# Install platform-specific PyTorch first, then requirements.txt. See README.md.
