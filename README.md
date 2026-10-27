@@ -1,7 +1,5 @@
 # ViRTA Training and Evaluation Commands
 
-All commands below are run from the source-code root directory. First set up the runtime environment and prepare the news image-text data, clean images, and the official CLIP weights for the matching language. Place the Chinese weights at `pretrained/clip_cn_vit-b-16.pt` and the English weights at `pretrained/ViT-B-16.pt`; positional-embedding interpolation is handled automatically by the code.
-
 ## 0. Set Up the Environment
 
 The reference training environment is Linux with an NVIDIA GPU. Use the following versions:
