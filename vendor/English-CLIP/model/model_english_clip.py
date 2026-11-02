@@ -302,12 +302,12 @@ class CLIP(nn.Module):
                  transformer_heads: int,
                  transformer_layers: int, 
                  load_from_clip: bool,
-                 run_finelip: bool
+                 run_english_clip: bool
                  ):
         super().__init__()
 
         self.context_length = 248
-        self.run_finelip = run_finelip 
+        self.run_english_clip = run_english_clip 
 
         if isinstance(vision_layers, (tuple, list)):
             vision_heads = vision_width * 32 // 64
@@ -357,7 +357,7 @@ class CLIP(nn.Module):
         self.mask2 = torch.zeros([248, 1])
         self.mask2[20:, :] = 1
 
-        if self.run_finelip: 
+        if self.run_english_clip: 
             self.cross_net = CrossSparseAggrNet_v2()
             self.criterion = None
     
@@ -515,7 +515,7 @@ class CLIP(nn.Module):
 
         loss_1 = 0.0
         loss_3 = torch.tensor([0]).to(text.device)
-        if self.run_finelip:
+        if self.run_english_clip:
             loss_3 = self.inference_lvl3(image_features_full, text_features_full, lengths, img_ids, warmup_alpha)
         else: #run baseline 
             loss_1 = self.inference_lvl1(image_features, text_features, rank)
@@ -545,7 +545,7 @@ def convert_weights(model: nn.Module):
 
     model.apply(_convert_weights_to_fp16)
 
-def build_model(state_dict: dict, load_from_clip: bool, run_finelip: bool):
+def build_model(state_dict: dict, load_from_clip: bool, run_english_clip: bool):
     vit = "visual.proj" in state_dict
 
     if vit:
@@ -573,7 +573,7 @@ def build_model(state_dict: dict, load_from_clip: bool, run_finelip: bool):
     model = CLIP(
         embed_dim,
         image_resolution, vision_layers, vision_width, vision_patch_size,
-        context_length, vocab_size, transformer_width, transformer_heads, transformer_layers, load_from_clip, run_finelip
+        context_length, vocab_size, transformer_width, transformer_heads, transformer_layers, load_from_clip, run_english_clip
     )
 
     for key in ["input_resolution", "context_length", "vocab_size"]:

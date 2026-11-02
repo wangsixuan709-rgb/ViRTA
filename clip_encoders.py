@@ -1,4 +1,4 @@
-"""Official FineLIP-248 / Chinese-CLIP-256 encoders, with unprojected token sequences."""
+"""Official English-CLIP-248 / Chinese-CLIP-256 encoders, with unprojected token sequences."""
 from pathlib import Path
 import os
 import sys
@@ -11,7 +11,7 @@ PRETRAINED = Path(os.environ.get('VIRTA_PRETRAINED_DIR',
                                os.environ.get('MMBE_PRETRAINED_DIR', ROOT / 'pretrained'))).expanduser()
 if not (ROOT / 'vendor').is_dir() and (ROOT.parent / 'vendor').is_dir():
     ROOT = ROOT.parent
-for source in (ROOT / 'vendor/FineLIP', ROOT / 'vendor/Chinese-CLIP'):
+for source in (ROOT / 'vendor/English-CLIP', ROOT / 'vendor/Chinese-CLIP'):
     if str(source) not in sys.path:
         sys.path.insert(0, str(source))
 
@@ -28,7 +28,7 @@ def language_for(dataset):
 def tokenize_article(text, language, overlap=48):
     """248 includes SOT/EOT: 246 content tokens, stride 198, no article cap."""
     if language == 'en':
-        from model.finelip import _tokenizer
+        from model.english_clip import _tokenizer
         content = _tokenizer.encode(text)
         capacity, length, start_id, end_id = 246, 248, 49406, 49407
         if not 0 <= overlap < capacity:
@@ -62,7 +62,7 @@ class CLIPEncoders(nn.Module):
         super().__init__()
         self.language = language
         if language == 'en':
-            from model.finelip import load_from_clip
+            from model.english_clip import load_from_clip
             self.clip, _ = load_from_clip('ViT-B/16', device='cpu',
                                           download_root=str(PRETRAINED))
             self.text_width, self.context_length = 512, 248

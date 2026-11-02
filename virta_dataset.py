@@ -1,4 +1,4 @@
-"""Chinese-CLIP-256 Weibo and overlapping FineLIP-248 full English articles."""
+"""Chinese-CLIP-256 Weibo and overlapping English-CLIP-248 full English articles."""
 from __future__ import annotations
 
 import os

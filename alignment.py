@@ -18,7 +18,7 @@ class ATM(nn.Module):
         return torch.cat([tokens[:, :1], self.image(tokens[:, 1:])], dim=1)
 
     def refine_text(self, tokens, mask, language):
-        # FineLIP keeps EOT outside aggregation. Chinese-CLIP keeps its global CLS.
+        # English-CLIP keeps EOT outside aggregation. Chinese-CLIP keeps its global CLS.
         positions = torch.arange(tokens.shape[1], device=tokens.device)[None, :]
         end = mask.sum(-1).long() - 1
         global_index = end if language == 'en' else torch.zeros_like(end)

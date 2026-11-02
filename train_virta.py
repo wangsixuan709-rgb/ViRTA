@@ -225,12 +225,12 @@ def calibrate_risk(model, loader, device, class_weights=None, folds=FOLDS, seed=
 
 
 def train_extended_text_positions(encoders):
-    """FineLIP's mask2 activates only positions 20:248; keep all other weights frozen."""
+    """English-CLIP's mask2 activates only positions 20:248; keep all other weights frozen."""
     if encoders.language != "en":
-        raise ValueError("Extended text position training requires the English FineLIP encoder")
+        raise ValueError("Extended text position training requires the English-CLIP encoder")
     mask = encoders.clip.mask2
     if mask.shape != (248, 1) or torch.count_nonzero(mask[:20]) or not torch.all(mask[20:] == 1):
-        raise ValueError("Expected FineLIP's fixed first-20 / trainable last-228 position mask")
+        raise ValueError("Expected English-CLIP's fixed first-20 / trainable last-228 position mask")
     encoders.requires_grad_(False)
     positions = encoders.clip.positional_embedding_res
     positions.requires_grad_(True)
@@ -523,7 +523,7 @@ if __name__ == "__main__":
     parser.add_argument('--atm-keep-ratio', type=float, choices=tuple(i/10 for i in range(1,11)), default=.5)
     parser.add_argument("--freeze-text", action="store_true", help="Keep text frozen even with --train-backbones; text is frozen by default")
     parser.add_argument("--train-text-positions", action="store_true",
-                        help="Train only English FineLIP positions 20:248; ignored for GossipCop, whose positions stay frozen")
+                        help="Train only English-CLIP positions 20:248; ignored for GossipCop, whose positions stay frozen")
     parser.add_argument("--train-backbones", action="store_true",
                         help="fine-tune both CLIP encoders; default freezes all encoders and VPRM")
     parser.add_argument("--data-root", help="Directory containing this dataset's train/val/test CSVs")

@@ -10,7 +10,7 @@ from PIL import Image
 from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normalize
 from tqdm import tqdm
 
-from .model_finelip import build_model
+from .model_english_clip import build_model
 from .simple_tokenizer import SimpleTokenizer as _Tokenizer
 
 try:
@@ -43,7 +43,7 @@ def _transform(n_px):
 
 
 
-def load(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", download_root: str = None, run_finelip=False):
+def load(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", download_root: str = None, run_english_clip=False):
     """Load a long CLIP model
 
     Parameters
@@ -67,7 +67,7 @@ def load(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_a
 
     state_dict = torch.load(model_path, map_location="cpu")
     
-    model = build_model(state_dict or model.state_dict(), load_from_clip = False, run_finelip=run_finelip).to(device)
+    model = build_model(state_dict or model.state_dict(), load_from_clip = False, run_english_clip=run_english_clip).to(device)
 
     if str(device) == "cpu":
         model.float()
@@ -133,7 +133,7 @@ def load(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_a
     return model, _transform(model.input_resolution.item())
 
 
-def load_from_clip(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", jit: bool = False, download_root: str = None, run_finelip=False):
+def load_from_clip(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", jit: bool = False, download_root: str = None, run_english_clip=False):
     """Load from CLIP model for fine-tuning 
 
     Parameters
@@ -225,7 +225,7 @@ def load_from_clip(name: str, device: Union[str, torch.device] = "cuda" if torch
                 jit = False
             state_dict = torch.load(opened_file, map_location="cpu")
 
-    model = build_model(state_dict or model.state_dict(), load_from_clip = True, run_finelip=run_finelip).to(device)
+    model = build_model(state_dict or model.state_dict(), load_from_clip = True, run_english_clip=run_english_clip).to(device)
         
     positional_embedding_pre = model.positional_embedding.type(model.dtype)
             
